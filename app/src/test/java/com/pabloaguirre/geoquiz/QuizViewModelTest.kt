@@ -22,12 +22,12 @@ class QuizViewModelTest {
     @Test
     fun wrapsAroundQuestionBank() {
         val savedStateHandle = SavedStateHandle(
-            mapOf(CURRENT_INDEX_KEY to 5)
+            mapOf(CURRENT_INDEX_KEY to 4)
         )
         val quizViewModel = QuizViewModel(savedStateHandle)
 
         assertEquals(
-            R.string.question_asia,
+            R.string.question_americas,
             quizViewModel.currentQuestionText
         )
 
@@ -37,6 +37,27 @@ class QuizViewModelTest {
             R.string.question_australia,
             quizViewModel.currentQuestionText
         )
+    }
+
+    @Test
+    fun previousWrapsFromFirstQuestionToLastQuestion() {
+        val quizViewModel = QuizViewModel(SavedStateHandle())
+
+        quizViewModel.moveToPrevious()
+
+        assertEquals(R.string.question_americas, quizViewModel.currentQuestionText)
+    }
+
+    @Test
+    fun preventsAnsweringTheSameQuestionTwice() {
+        val quizViewModel = QuizViewModel(SavedStateHandle())
+
+        assertTrue(quizViewModel.answerCurrentQuestion(true))
+        assertFalse(quizViewModel.canAnswerCurrentQuestion)
+        quizViewModel.answerCurrentQuestion(true)
+
+        quizViewModel.moveToNext()
+        assertTrue(quizViewModel.canAnswerCurrentQuestion)
     }
 
     @Test

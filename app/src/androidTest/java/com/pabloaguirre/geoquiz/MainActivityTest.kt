@@ -50,4 +50,11 @@ class MainActivityTest {
         onView(withId(R.id.question_text_view))
             .check(matches(withText(R.string.question_oceans)))
     }
+
+    @Test
+    fun previousFromFirstQuestionWrapsToFifthQuestion() {
+        onView(withId(R.id.previous_button)).perform(click())
+        onView(withId(R.id.question_text_view))
+            .check(matches(withText(R.string.question_americas)))
+    }
 }
