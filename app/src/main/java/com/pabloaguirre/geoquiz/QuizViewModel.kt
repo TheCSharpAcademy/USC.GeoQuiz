@@ -3,7 +3,7 @@ package com.pabloaguirre.geoquiz
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
-private const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
+const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
 
 class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     private val questionBank = listOf(
