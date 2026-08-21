@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
 const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
+const val IS_CHEATER_KEY = "IS_CHEATER_KEY"
 
 class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     private val questionBank = listOf(
@@ -23,6 +24,12 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
     private val answeredQuestions = BooleanArray(questionBank.size)
     private var correctAnswerCount = 0
     private var scoreShown = false
+
+    var isCheater: Boolean
+        get() = savedStateHandle[IS_CHEATER_KEY] ?: false
+        set(value) {
+            savedStateHandle[IS_CHEATER_KEY] = value
+        }
 
     val currentQuestionAnswer: Boolean
         get() = questionBank[currentIndex].answer
