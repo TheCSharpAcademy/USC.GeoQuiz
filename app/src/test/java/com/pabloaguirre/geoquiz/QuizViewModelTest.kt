@@ -55,4 +55,31 @@ class QuizViewModelTest {
 
         assertFalse(quizViewModel.currentQuestionAnswer)
     }
+
+    @Test
+    fun tracksCheatingForEachQuestionSeparately() {
+        val savedStateHandle = SavedStateHandle()
+        val quizViewModel = QuizViewModel(savedStateHandle)
+
+        quizViewModel.isCheater = true
+        quizViewModel.moveToNext()
+
+        assertFalse(quizViewModel.isCheater)
+
+        quizViewModel.moveToPrevious()
+
+        assertTrue(quizViewModel.isCheater)
+    }
+
+    @Test
+    fun preservesPerQuestionCheatingInSavedState() {
+        val savedStateHandle = SavedStateHandle()
+        QuizViewModel(savedStateHandle).isCheater = true
+
+        val restoredViewModel = QuizViewModel(savedStateHandle)
+
+        assertTrue(restoredViewModel.isCheater)
+        restoredViewModel.moveToNext()
+        assertFalse(restoredViewModel.isCheater)
+    }
 }
